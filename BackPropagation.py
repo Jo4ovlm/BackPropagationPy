@@ -59,9 +59,6 @@ def atualizar_adam(parametro, gradiente, m, v, t, taxa_aprendizado):
     return parametro, m, v
 
 # Treinamento da rede neural com backpropagation e Adam
-erro_minimo = float('inf')
-contagem_sem_melhoria = 0
-
 for epoca in range(epocas):
     # Foward Pass
     entrada_camada_oculta_1 = np.dot(X_treino, W1) + b1
@@ -75,16 +72,6 @@ for epoca in range(epocas):
 
     # Calcular o erro (loss)
     erro = erro_quadratico_medio(y_treino, saida_predita)
-
-    # Para o loop caso não esteja melhorando;
-    if erro < erro_minimo - tolerancia:
-        erro_minimo = erro
-        contagem_sem_melhoria = 0
-    else:
-        contagem_sem_melhoria += 1
-        if contagem_sem_melhoria >= paciencia:
-            print(f"Parando antecipadamente na época {epoca + 1} devido à falta de melhoria")
-            break
     
     # Backpropagation
     erro_gradiente = y_treino - saida_predita
